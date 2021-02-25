@@ -20,23 +20,32 @@ function showRandom () {
 }
 
 function showById (id) {
+    if (id < 0) {
+        alert("Insira uma id válida")
+    }
+
     let url = "https://punapi.azurewebsites.net/api/Pun/" + id
     let xhr = new XMLHttpRequest();
-    
+
     xhr.open('GET', url, true);
-    
-    xhr.onreadystatechange = function() {
+
+    xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status = 200) {
                 result = JSON.parse(xhr.responseText);
-                document.getElementById('idNumber').innerHTML = result.Id + ".";
-                document.getElementById('question').innerHTML = result.Question;
-                document.getElementById('answer').innerHTML = result.Answer;
+                if (result == null) {
+                    alert("Insira uma id válida")
+                } else {
+                    document.getElementById('idNumber').innerHTML = result.Id + ".";
+                    document.getElementById('question').innerHTML = result.Question;
+                    document.getElementById('answer').innerHTML = result.Answer;
+                }
             }
         }
     }
-    
+
     xhr.send();
+
 }
 
 document.getElementById('random').onclick = showRandom;
